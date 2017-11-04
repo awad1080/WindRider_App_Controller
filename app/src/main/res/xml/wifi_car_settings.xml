@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen 
+    xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:title="Robot Setting"
+    android:key="pref_screen">
+    <PreferenceCategory android:title="Server Setting" android:key="pref_key_comm_settings">
+        <EditTextPreference 
+            android:dialogTitle="Control IP:Port"
+            android:title="Control IP:Port"
+            android:key="pref_key_router_url"
+            android:defaultValue="192.168.1.206:8888" />
+        <EditTextPreference
+            android:title="Video Address"
+            android:key="pref_key_camera_url"
+            android:defaultValue="http://images.china.cn/attachement/jpg/site1000/20110308/"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_key_test_settings"
+        android:title="Debugging">
+        <CheckBoxPreference
+            android:key="pref_key_test_enabled"
+            android:title="enable debug mode" />
+        <EditTextPreference
+            android:defaultValue="192.168.128.135:2001"
+            android:key="pref_key_router_url_test"
+            android:title="control IP:port (debug mode)" />
+        <EditTextPreference
+            android:defaultValue="http://192.168.128.135:8080/?action=stream"
+            android:key="pref_key_camera_url_test"
+            android:title="video adress (debug mode)" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_key_len_settings"
+        android:title="Headlight set">
+        <EditTextPreference
+            android:defaultValue="FF040100FF"
+            android:dialogTitle="大灯开启指令"
+            android:key="pref_key_len_on"
+            android:title="turn on head lamp" />
+        <EditTextPreference
+            android:defaultValue="FF040000FF"
+            android:key="pref_key_len_off"
+            android:title="turn off headlight cmd" />
+    </PreferenceCategory>
+</PreferenceScreen>

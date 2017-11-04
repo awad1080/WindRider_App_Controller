@@ -1,0 +1,4 @@
+#Thu Nov 02 17:51:08 EDT 2017
+base.0=C\:\\Users\\awad1\\Desktop\\ClimbRobotRomoteController\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+renamed.0=classes.dex
+file.0=C\:\\Users\\awad1\\Desktop\\ClimbRobotRomoteController\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0\\classes.dex

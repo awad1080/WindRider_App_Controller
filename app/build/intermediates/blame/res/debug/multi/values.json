@@ -1,0 +1,62 @@
+[
+    {
+        "outputFile": "C:\\MyProgram\\Android\\android-camera-socket-stream-master\\WiFiCarClient-master\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 45,
+                    "endOffset": 96
+                },
+                "from": {
+                    "file": "C:\\MyProgram\\Android\\android-camera-socket-stream-master\\WiFiCarClient-master\\app\\src\\main\\res\\values\\strings.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 96,
+                        "endColumn": 45,
+                        "endOffset": 137
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 3,
+                    "startColumn": 4,
+                    "startOffset": 101,
+                    "endColumn": 51,
+                    "endOffset": 148
+                },
+                "from": {
+                    "file": "C:\\MyProgram\\Android\\android-camera-socket-stream-master\\WiFiCarClient-master\\app\\src\\main\\res\\values\\strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 4,
+                    "startColumn": 4,
+                    "startOffset": 153,
+                    "endColumn": 40,
+                    "endOffset": 189
+                },
+                "from": {
+                    "file": "C:\\MyProgram\\Android\\android-camera-socket-stream-master\\WiFiCarClient-master\\app\\src\\main\\res\\values\\strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 5,
+                    "startColumn": 4,
+                    "startOffset": 194,
+                    "endColumn": 74,
+                    "endOffset": 264
+                },
+                "from": {
+                    "file": "C:\\MyProgram\\Android\\android-camera-socket-stream-master\\WiFiCarClient-master\\app\\src\\main\\res\\values\\strings.xml"
+                }
+            }
+        ]
+    }
+]
