@@ -25,7 +25,7 @@ public class WifiCarSettings extends PreferenceActivity implements OnSharedPrefe
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// 所的的值将会自动保存到SharePreferences,在onCreate中加入wifi_car_settings
+		// the value will automatically be saved to SharePreferences,in onCreate join wifi_car_settings
 		addPreferencesFromResource(R.xml.wifi_car_settings);
 
 

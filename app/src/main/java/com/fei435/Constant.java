@@ -16,7 +16,7 @@ public class Constant {
 	//after installing the app for the first time，还没有启动过，没有创建sharedPreference
 	//these values are sharedPreference the default value
 	//TODO:change these values after the project is complete
-	public static final String DEFAULT_VALUE_CAMERA_URL = "http://192.168.128.135:8080/?action=stream";
+	public static final String DEFAULT_VALUE_CAMERA_URL = "http://192.168.1.91:5000/?action=stream";
 	public static final String DEFAULT_VALUE_ROUTER_URL = "192.168.128.135:2001";
 	public static final String DEFAULT_VALUE_CAMERA_URL_TEST = "http://192.168.128.135:8080/?action=stream";
 	public static final String DEFAULT_VALUE_ROUTER_URL_TEST = "192.168.128.135:2001";
@@ -46,8 +46,8 @@ public class Constant {
 	public final static int RECORDER_START_OK = 23;
 	public final static int RECORDER_START_FAILED = 23;
 
-	public final static int CONNECTION_TIMEOUT_INT = 3*1000;  //http连接超时时间
-	public final static int SO_TIMEOUT_INT = 3*1000;		  //http等待data时间
+	public final static int CONNECTION_TIMEOUT_INT = 3*1000;  //http connection timeout
+	public final static int SO_TIMEOUT_INT = 3*1000;		  //http waiting time for data
 	public final static int SOCKET_TIMEOUT = 3*1000;
 
 	//////////////////////////////////////////////////////////
@@ -92,6 +92,7 @@ public class Constant {
 	public final static int QUIT_BUTTON_PRESS_INTERVAL = 2500;//ms
 	public final static int HEART_BREAK_SEND_INTERVAL = 2500; //ms
 
+	/*                      msg_rec[]= msg_rec[0] , int state , operator 0x00 , speed change ,  ??   */
 	public static byte[] COMM_FORWARD =  {(byte) 0xFF, (byte)0x00, (byte)0x01, (byte)0x00, (byte) 0xFE};
 	public static byte[] COMM_BACKWARD = {(byte) 0xFF, (byte)0x00, (byte)0x02, (byte)0x00, (byte) 0xFE};
 	public static byte[] COMM_STOP =     {(byte) 0xFF, (byte)0x00, (byte)0x00, (byte)0x00, (byte) 0xFE};
@@ -112,7 +113,7 @@ public class Constant {
 	public static byte[] COMM_CAMERA_DOWN = {(byte) 0xFF, (byte)0x02, (byte)0x10, (byte)0x00, (byte) 0xFE};
 
 
-	//initial velocity 506  16
+	//initial velocity 506  16                                                         0x32 = 50 in decimal that's where you change it
 	public static byte[] COMM_SPEED_VALUE_1 =   {(byte) 0xFF, (byte)0x05, (byte)0x01, (byte)0x32, (byte) 0xFE};//speed of motion motor
 	public static byte[] COMM_SPEED_VALUE_2 =   {(byte) 0xFF, (byte)0x05, (byte)0x02, (byte)0x32, (byte) 0xFE};//speed of suction motor
 

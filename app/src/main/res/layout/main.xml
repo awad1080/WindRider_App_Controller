@@ -18,16 +18,7 @@
         android:layout_below="@+id/btnCamSwitch"
         android:layout_alignLeft="@+id/btnCamSwitch" />
 
-    <ImageButton
-        android:id="@+id/btnCamLeft"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:layout_gravity="left"
-        android:background="#00000000"
-        android:src="@drawable/sym_left"
-        android:layout_below="@+id/btnCamUp"
-        android:layout_alignRight="@+id/btnServo"
-        android:layout_marginRight="11dp" />
+
 
     <ImageButton
         android:id="@+id/btnLeft"
@@ -75,15 +66,6 @@
         android:layout_toRightOf="@id/btnStop"
         android:background="#00000000"
         android:src="@drawable/sym_right" />
-
-    <ImageButton
-        android:id="@+id/btnCamRight"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:background="#00000000"
-        android:src="@drawable/sym_right"
-        android:layout_alignBottom="@+id/gear1"
-        android:layout_toRightOf="@+id/btnCamDown" />
 
     <ImageButton
         android:id="@+id/btnForward"
@@ -200,19 +182,19 @@
         android:id="@+id/speedChangeCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/ButtonCus1"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="450dp"
         android:checked="false"
         android:text="speed setting" />
+
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/gravityToggleButton"
-        android:layout_below="@id/ButtonCus1"
-        android:layout_marginTop="15dp"
+        android:layout_below="@id/speedChangeCheckbox"
+        android:layout_marginTop="1dp"
         android:orientation="horizontal"
+        android:layout_marginLeft="170dp"
         android:id="@+id/linearLayout3">
 
         <LinearLayout
@@ -222,12 +204,13 @@
 
             <EditText
                 android:id="@+id/editTextSpeed1"
-                android:layout_width="64dp"
+                android:layout_width="38dp"
                 android:layout_height="34dp"
                 android:layout_marginTop="4dp"
-                android:ems="10"
-                android:hint="运动电机"
+                android:layout_marginLeft="200dp"
                 android:digits="1234567890"
+                android:ems="10"
+                android:hint="motor speed"
                 android:textSize="10sp"
                 android:visibility="invisible" />
 
@@ -241,34 +224,118 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal" >
-
-            <EditText
-                android:id="@+id/editTextSpeed2"
-                android:layout_width="64dp"
-                android:layout_height="34dp"
-                android:layout_marginLeft="3dp"
-                android:layout_marginTop="4dp"
-                android:ems="10"
-                android:hint="吸气电机"
-                android:digits="1234567890"
-                android:textSize="10sp"
-                android:visibility="invisible" />
-
-            <SeekBar
-                android:id="@+id/seekBarSpeed2"
-                android:layout_width="138dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="7dp"
-                android:visibility="invisible" />
-
-        </LinearLayout>
 
     </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/Vac_Box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/ButtonCus1"
+        android:checked="false"
+        android:text="Vaccum settings" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editTextVac"
+            android:layout_width="38dp"
+            android:layout_height="34dp"
+            android:layout_marginLeft="160dp"
+            android:layout_marginTop="45dp"
+            android:ems="10"
+            android:hint="Vac Power"
+            android:digits="1234567890"
+            android:textSize="10sp"
+            android:visibility="invisible" />
+
+        <SeekBar
+            android:id="@+id/VacSeekBar"
+            android:layout_width="138dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="50dp"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/Water_Box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="95dp"
+        android:checked="false"
+        android:text="Water Power" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/editTextWater"
+            android:layout_width="38dp"
+            android:layout_height="34dp"
+            android:layout_marginLeft="140dp"
+            android:layout_marginTop="105dp"
+            android:digits="1234567890"
+            android:ems="10"
+            android:hint="Water Pwr"
+            android:textSize="10sp"
+            android:visibility="invisible" />
+
+        <SeekBar
+            android:id="@+id/WaterSeekBar"
+            android:layout_width="138dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="105dp"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/Light_Box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="155dp"
+        android:checked="false"
+        android:text="Light intensity" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/editTextLight"
+            android:layout_width="38dp"
+            android:layout_height="34dp"
+            android:layout_marginLeft="140dp"
+            android:layout_marginTop="165dp"
+            android:digits="1234567890"
+            android:ems="10"
+            android:hint="Light Intensity"
+            android:textSize="10sp"
+            android:visibility="invisible" />
+
+        <SeekBar
+            android:id="@+id/LightSeekBar"
+            android:layout_width="138dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="165dp"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+
+
 
     <ImageButton
         android:id="@+id/btnServo"
@@ -277,7 +344,7 @@
         android:background="#00000000"
         android:src="@drawable/sym_stop"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/speedChangeCheckbox"
+        android:layout_toLeftOf="@+id/btnLen"
         android:layout_marginLeft="34dp" />
 
 

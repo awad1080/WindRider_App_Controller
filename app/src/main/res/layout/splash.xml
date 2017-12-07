@@ -26,7 +26,13 @@
                android:background="@drawable/pic_start" />
 
            <ImageButton
-               android:id="@+id/btnConfig" android:background="@drawable/pic_setting" android:layout_width="130.0dip" android:layout_height="130.0dip" android:layout_marginLeft="15.0dip" android:layout_toRightOf="@id/btnStartMain" android:layout_alignParentLeft="true" />
+               android:id="@+id/btnConfig"
+               android:layout_width="130.0dip"
+               android:layout_height="130.0dip"
+               android:layout_alignParentLeft="true"
+               android:layout_marginLeft="15.0dip"
+               android:layout_toRightOf="@id/btnStartMain"
+               android:background="@drawable/pic_setting" />
 
         </RelativeLayout>
     </LinearLayout>

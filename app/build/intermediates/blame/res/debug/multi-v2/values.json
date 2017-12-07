@@ -21,6 +21,28 @@
                     }
                 }
             ]
+        },
+        {
+            "outputFile": "C:\\Users\\awad1\\Desktop\\wall-climbing-robot\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\awad1\\Desktop\\wall-climbing-robot\\app\\src\\main\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "3,4,2,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "99,146,57,199",
+                        "endColumns": "45,51,40,74",
+                        "endOffsets": "140,193,93,269"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,101,153,194",
+                        "endColumns": "45,51,40,74",
+                        "endOffsets": "96,148,189,264"
+                    }
+                }
+            ]
         }
     ]
 }

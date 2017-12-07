@@ -36,16 +36,16 @@ public class WiFiCarController{    //WiFiCar connection encapsulation class
 
     /**/
     //* bytes convert to hexadecimal string
-    //* @param byte[] b byte array
-    //* @return String each Byte value separated by spaces
-    // */
-    private String byte2HexStr(byte[] b){
-        String stmp="";
-        StringBuilder sb = new StringBuilder("");
-        for (int n=0;n<b.length;n++)
-        {
-            stmp = Integer.toHexString(b[n] & 0xFF);
-            sb.append((stmp.length()==1)? "0"+stmp : stmp);
+            //* @param byte[] b byte array
+            //* @return String each Byte value separated by spaces
+            // */
+        private String byte2HexStr(byte[] b){
+            String stmp="";
+            StringBuilder sb = new StringBuilder("");
+            for (int n=0;n<b.length;n++)
+            {
+                stmp = Integer.toHexString(b[n] & 0xFF);
+                sb.append((stmp.length()==1)? "0"+stmp : stmp);
             sb.append(" ");
         }
         return sb.toString().toUpperCase().trim();
@@ -213,7 +213,7 @@ public class WiFiCarController{    //WiFiCar connection encapsulation class
     }
 
 
-    public void sendCommand(byte[] data) {   //发送命令的函数
+    public void sendCommand(byte[] data) {   //the function that sends the command
         if ( mSocketStatus != Constant.STATUS_CONNECTED || null == mtcpSocket) {
             setUiInfo("status abnormal, can't send command " +  byte2IntStr(data));
             Log.i("socket command","the status is abnormal and command can't be sent" +  byte2HexStr(data));
@@ -225,7 +225,7 @@ public class WiFiCarController{    //WiFiCar connection encapsulation class
             Log.i("socket","not ready to send command,wait 1s pls");
             return;
         }
-        //调试命令发送时使用
+        //used when sending debugging commands
         //tag:(mlogtext|socket|settingclick|SurfaceStatus|heart|inspect|MjpegView|ScreenCapture|filelock|speed)
         //tag:(MjpegView|ScreenCapture|filelock)
         //来在logcat做filter
@@ -241,7 +241,7 @@ public class WiFiCarController{    //WiFiCar connection encapsulation class
         }
     }
 
-    //此函数获取WiFi连接状态
+    //the function gets the wifi connection status
     private int getWifiStatus () {
         int status = Constant.WIFI_STATE_UNKNOW;
         ConnectivityManager conMan = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -280,15 +280,15 @@ public class WiFiCarController{    //WiFiCar connection encapsulation class
 
 
     public void connectToRouter() {
-        int status = getWifiStatus();    //获取WiFi连接状态
+        int status = getWifiStatus();    //get wifi connection status
 
         if (Constant.WIFI_STATE_CONNECTED == status || Constant.m4test) {
-            //连接服务器
+            //connect to server
             initWifiConnection();
             if (mSocketStatus == Constant.STATUS_CONNECTED){
                 if(!mThreadFlag){
                     mThreadFlag = true;
-                    //网络连接线程
+                    //network connection thread
                     try {
                         mThreadClient = new ControlThread();
                         mThreadClient.start();
@@ -327,7 +327,7 @@ public class WiFiCarController{    //WiFiCar connection encapsulation class
                 }
             }
         }
-        //关闭socket
+        //shutdown socket
         if(null != mtcpSocket) {
             try {
                 Log.i("socket", "shut down mtcpSocket..");

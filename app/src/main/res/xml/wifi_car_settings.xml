@@ -26,7 +26,7 @@
             android:key="pref_key_router_url_test"
             android:title="control IP:port (debug mode)" />
         <EditTextPreference
-            android:defaultValue="http://192.168.128.135:8080/?action=stream"
+            android:defaultValue="http://192.168.1.191:5000"
             android:key="pref_key_camera_url_test"
             android:title="video adress (debug mode)" />
     </PreferenceCategory>

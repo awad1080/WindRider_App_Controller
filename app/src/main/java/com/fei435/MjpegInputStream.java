@@ -19,7 +19,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.util.Properties;
 
-//解码视频流的类
+//Class of decoding video stream
 public class MjpegInputStream extends DataInputStream {
     private final byte[] SOI_MARKER = { (byte) 0xFF, (byte) 0xD8 };
     private final byte[] EOF_MARKER = { (byte) 0xFF, (byte) 0xD9 };
@@ -28,7 +28,7 @@ public class MjpegInputStream extends DataInputStream {
     private final static int FRAME_MAX_LENGTH = 40000 + HEADER_MAX_LENGTH;
     private int mContentLength = -1;
 
-    //从连接上读取视频流的方法
+    //How to read video stream from connection
     public static MjpegInputStream read (String url) throws ClientProtocolException,IOException{
         //public static MjpegInputStream read (String url){
         HttpResponse res;
@@ -74,7 +74,7 @@ public class MjpegInputStream extends DataInputStream {
         return Integer.parseInt(props.getProperty(CONTENT_LENGTH));
     }
 
-    public Bitmap readMjpegFrame() throws IOException {   //从视频流中读取一帧
+    public Bitmap readMjpegFrame() throws IOException {   //read frame from video stream
         mark(FRAME_MAX_LENGTH);
         int headerLen = getStartOfSequence(this, SOI_MARKER);
         reset();

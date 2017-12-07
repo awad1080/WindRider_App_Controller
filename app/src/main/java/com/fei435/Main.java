@@ -41,7 +41,7 @@ import static com.fei435.Constant.COMM_SUCTION_OFF;
 import static com.fei435.Constant.COMM_SUCTION_ON;
 
 public class Main extends Activity implements
-        com.fei435.SeekBar.OnSeekBarChangeListener,android.widget.SeekBar.OnSeekBarChangeListener  //分别是横向和纵向的SeekBar
+        com.fei435.SeekBar.OnSeekBarChangeListener,android.widget.SeekBar.OnSeekBarChangeListener  //horizontal and vertical respectively SeekBar
 {
     private final int MIN_GEAR_STEP = 5;
     private final int MAX_GEAR_VALUE = 180;
@@ -55,13 +55,25 @@ public class Main extends Activity implements
     private final int MAX_GEAR_VALUE_2 = 100;
     private final int INIT_GEAR_VALUE_2 = 50;
 
+    private final int Vac_Min_Value=1;
+    private final int Vac_Int_Value= 20;
+    private final int Vac_Max_Value=100;
+
+    private final int Water_Min_Value=1;
+    private final int Water_Int_Value=50;
+    private final int Water_Max_Value=100;
+
+    private final int Light_Min_Value=1;
+    private final int Light_Int_Value=50;
+    private final int Light_Max_Value=100;
+
     private final int WARNING_ICON_OFF_DURATION_MSEC = 600;
     private final int WARNING_ICON_ON_DURATION_MSEC = 800;
 
     public static int flagsuction = 0;
     public static int flagcamera = 0;
 
-    private ImageButton ForWard;  //按钮的类，代表一个按钮
+    private ImageButton ForWard;  //button class, representing a button
     private ImageButton BackWard;
     private ImageButton TurnLeft;
     private ImageButton TurnRight;
@@ -74,7 +86,7 @@ public class Main extends Activity implements
     private ImageButton CameraRight;
     private ImageButton CameraSwitch;
 
-    //插入我的按钮
+    //insert my button
     private ImageButton Servo;
     private ImageButton Suction;
 
@@ -123,6 +135,23 @@ public class Main extends Activity implements
     private int  mSpeedSeekBarValue2 = -1;
     private EditText editTextSpeed1;
     private EditText editTextSpeed2;
+   ////////////////////////////////////////////////////////////////////////////
+    private android.widget.SeekBar VacSeekBar;
+    private int VacSeekBar_Value = -1;
+    private EditText editTextVac;
+    private CheckBox Vac_Box;
+
+    private android.widget.SeekBar WaterSeekBar;
+    private int WaterSeekBar_Value = -1;
+    private CheckBox Water_Box;
+    private EditText editTextWater;
+
+    private android.widget.SeekBar LightSeekBar;
+    private int LightSeekBar_Value =-1;
+    private EditText editTextLight;
+    private CheckBox Light_Box;
+
+    ///////////////////////////////////////////////////////////////////////////
 
     private ToggleButton gravityDetectToggle;
     private CheckBox speedChangeCheckBox;
@@ -132,7 +161,7 @@ public class Main extends Activity implements
     private boolean bCaptureOn = false;
 
     private boolean mQuitFlag = false;
-    private boolean bHeartBreakFlag = false;//only for a test by feifei435
+    private boolean bHeartBreakFlag = false;//only for a test by fei435
     private int mHeartBreakCounter = 0;     //car heartbeat packet count
     private int mLastCounter = 0;
 
@@ -141,7 +170,7 @@ public class Main extends Activity implements
     private Sensor sensor = null;
     private int lastCommand = 0x0;
 
-    private WiFiCarController mWiFiCarControler = null;//网络连接线程的类
+    private WiFiCarController mWiFiCarControler = null;//network connection thread class
     private Context mContext;
     MjpegView backgroundView = null;
 
@@ -166,7 +195,7 @@ public class Main extends Activity implements
                 case Constant.MSG_ID_CON_SUCCESS:
                     mLogText.setText("Connecting to WiFiCar succeed!");
                     Log.i("mLogText","Connecting to WiFiCar succeed!");
-                    //连接成功，延时2秒发送速度设置指令
+                    //The connection is successful, delay 2 seconds to send speed setting instructions
                     Message msgChangeSpeed1 = new Message();
                     msgChangeSpeed1.what = Constant.MSG_ID_SET_SPEED;
                     msgChangeSpeed1.obj = Constant.COMM_SPEED_VALUE_1;
@@ -213,7 +242,7 @@ public class Main extends Activity implements
                     //Log.i("mLogText","开始进行自检，请稍等。。。。!!");
                     mLogText.setText("Checking Please wait!!");
                     Log.i("mLogText","Checking Please wait!!");
-                    //TODO:bReaddyToSendCmd应该放在哪里？
+                    //TODO:be ReadyToSendCmd where should I put it？
                     //bReaddyToSendCmd = true;
                     mWiFiCarControler.selfcheck();
                     break;
@@ -237,14 +266,13 @@ public class Main extends Activity implements
                     mLastCounter = mHeartBreakCounter;
                     mHeartBreakCounter = 0;
                     Message msgHB = new Message();
-                    msgHB.what = Constant.MSG_ID_HEART_BREAK_RECEIVE;//启动心跳包检测循环
+                    msgHB.what = Constant.MSG_ID_HEART_BREAK_RECEIVE;//start the heartbeat packet detection loop
                     mHandler.sendMessageDelayed(msgHB, Constant.HEART_BREAK_CHECK_INTERVAL);
                     break;
                 case Constant.MSG_ID_HEART_BREAK_SEND:
                     Message msgSB = new Message();
-                    msgSB.what = Constant.MSG_ID_HEART_BREAK_SEND;//循环向路由器发送心跳包
+                    msgSB.what = Constant.MSG_ID_HEART_BREAK_SEND;//loop send heartbeat packets to the router
                     Log.i("heart", "handle MSG_ID_HEART_BREAK_SEND");
-
                     mWiFiCarControler.sendCommand(Constant.COMM_HEART_BREAK);
                     mHandler.sendMessageDelayed (msgSB, Constant.HEART_BREAK_SEND_INTERVAL);
                     break;
@@ -257,22 +285,22 @@ public class Main extends Activity implements
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {   //每个android App一启动都会调用的函数
+    public void onCreate(Bundle savedInstanceState) {   //each one android App一the function that will be called when started
         super.onCreate(savedInstanceState);
         Log.i("SurfaceStatus","onCreate");
         mContext = this;
-        //TODO:以后可以把mHandler、mLogText都加入mContext中
+        //TODO: after mHandler、mLogText can join mContext
         mWiFiCarControler = new WiFiCarController(mHandler, mLogText, mContext);
         mVibrator = (Vibrator)this.getSystemService(Service.VIBRATOR_SERVICE);
-        mSensorMgr = (SensorManager)this.getSystemService(SENSOR_SERVICE);    //初始化感应器
-        sensor = mSensorMgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);    //实例化一个重力感应sensor
+        mSensorMgr = (SensorManager)this.getSystemService(SENSOR_SERVICE);    //initialize the sensor
+        sensor = mSensorMgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);    //initiate a gravity sensor
 
-        initSettings(); //初始化建立网络连接
+        initSettings(); //initialize the network connection
 
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);//隐去标题（应用的名字必须要写在setContentView之前，否则会有异常）
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);//hidden title (application name must be setContentView before, otherwise there will be abnormal）
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.main); //用于显示布局
+        setContentView(R.layout.main); //used to display layout
 
         //get button
         ForWard= (ImageButton)findViewById(R.id.btnForward);
@@ -281,10 +309,15 @@ public class Main extends Activity implements
         BackWard= (ImageButton)findViewById(R.id.btnBack);
         gravityDetectToggle = (ToggleButton)findViewById(R.id.gravityToggleButton);
         speedChangeCheckBox = (CheckBox)findViewById(R.id.speedChangeCheckbox);
+        ////////////////////////////////////////////////////////////////////////////////////
+        Vac_Box = (CheckBox)findViewById(R.id.Vac_Box);
+        Water_Box=(CheckBox)findViewById(R.id.Water_Box);
+        Light_Box=(CheckBox)findViewById(R.id.Light_Box);
+        ////////////////////////////////////////////////////////////////////////////////////
 
         CameraUp = (ImageButton)findViewById(R.id.btnCamUp);
-        CameraLeft = (ImageButton)findViewById(R.id.btnCamLeft);
-        CameraRight = (ImageButton)findViewById(R.id.btnCamRight);
+        /*CameraLeft = (ImageButton)findViewById(R.id.btnCamLeft);
+        CameraRight = (ImageButton)findViewById(R.id.btnCamRight); */
         CameraDown = (ImageButton)findViewById(R.id.btnCamDown);
         CameraSwitch = (ImageButton)findViewById(R.id.btnCamSwitch);
 
@@ -302,7 +335,7 @@ public class Main extends Activity implements
 
 
         TakePicture = (ImageButton)findViewById(R.id.ButtonTakePic);
-        TakePicture.setOnClickListener(buttonTakePicClickListener);//buttonTakePicClickListener就是事件发生后调用的处理函数
+        TakePicture.setOnClickListener(buttonTakePicClickListener);//buttonTakePicClickListener is the incident after the call handler
         mAnimIndicator = (ImageView)findViewById(R.id.btnIndicator);
         mWarningIcon = getResources().getDrawable(R.drawable.sym_indicator1);
 
@@ -327,7 +360,7 @@ public class Main extends Activity implements
         Suctionon = getResources().getDrawable(R.drawable.sym_stop_1);
         Suctionoff = getResources().getDrawable(R.drawable.sym_stop);
 
-        //我的按钮
+        //My Button
         CameraUpon = getResources().getDrawable(R.drawable.sym_forward_1);
         CameraUpoff = getResources().getDrawable(R.drawable.sym_forward);
 
@@ -344,7 +377,7 @@ public class Main extends Activity implements
         CameraSwitchoff = getResources().getDrawable(R.drawable.sym_stop);
 
 
-        //显示视频及按钮的view,即MjpegView，backgroundView是MjpegView的实例
+        //show video and buttons view,which is MjpegView，backgroundView yes MjpegView example
         backgroundView = (MjpegView)findViewById(R.id.mySurfaceView1);
         backgroundView.setHandler(mHandler);
 
@@ -356,14 +389,14 @@ public class Main extends Activity implements
             mLogText.setText("");
         }
 
-        //启动线程
+        //start the thread
 
-        //线程启动完成
+        //thread start completed
 
 
 
         //*******************
-        //下面这些滚动条先不管
+        //the first of these scroll bars don't matter
         //********************
         mSeekBar1 = (com.fei435.SeekBar)findViewById(R.id.gear1);
         mSeekBar1.setMax(MAX_GEAR_VALUE);
@@ -382,16 +415,40 @@ public class Main extends Activity implements
         editTextSpeed1 = (EditText)findViewById(R.id.editTextSpeed1);
         editTextSpeed1.setText(INIT_GEAR_VALUE_1+"");
 
+        /*
         mSpeedSeekBar2 = (android.widget.SeekBar)findViewById(R.id.seekBarSpeed2);
         mSpeedSeekBar2.setMax(MAX_GEAR_VALUE_2);
         mSpeedSeekBar2.setProgress(INIT_GEAR_VALUE_2);
         mSpeedSeekBar2.setOnSeekBarChangeListener(this);
         editTextSpeed2 = (EditText)findViewById(R.id.editTextSpeed2);
-        editTextSpeed2.setText(INIT_GEAR_VALUE_2+"");
+        editTextSpeed2.setText(INIT_GEAR_VALUE_2+""); */
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        VacSeekBar = (android.widget.SeekBar)findViewById(R.id.VacSeekBar);
+        VacSeekBar.setMax(100);
+        VacSeekBar.setProgress(Vac_Int_Value);
+        VacSeekBar.setOnSeekBarChangeListener(this);
+        editTextVac = (EditText)findViewById(R.id.editTextVac);
+        editTextVac.setText(Vac_Int_Value+"");
+
+        WaterSeekBar = (android.widget.SeekBar)findViewById(R.id.WaterSeekBar);
+        WaterSeekBar.setMax(100);
+        WaterSeekBar.setProgress(Water_Int_Value);
+        WaterSeekBar.setOnSeekBarChangeListener(this);
+        editTextWater = (EditText)findViewById(R.id.editTextWater);
+        editTextWater.setText(Water_Int_Value+"");
+
+        LightSeekBar = (android.widget.SeekBar)findViewById(R.id.LightSeekBar);
+        LightSeekBar.setMax(100);
+        LightSeekBar.setProgress(Light_Int_Value);
+        LightSeekBar.setOnSeekBarChangeListener(this);
+        editTextLight = (EditText)findViewById(R.id.editTextLight);
+        editTextLight.setText(Light_Int_Value+"");
+
+        ////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-        buttonLen.setKeepScreenOn(true); //保持屏幕长亮
+        buttonLen.setKeepScreenOn(true); //keep the screen long
 
         ForWard.setOnTouchListener( new View.OnTouchListener(){
             public boolean onTouch(View v, MotionEvent event) {
@@ -400,7 +457,7 @@ public class Main extends Activity implements
                 {
                     case MotionEvent.ACTION_DOWN:
                         mVibrator.vibrate(100);
-                        mWiFiCarControler.sendCommand(Constant.COMM_FORWARD);   //发送前进命令
+                        mWiFiCarControler.sendCommand(Constant.COMM_FORWARD);   //send forward command
                         ForWard.setImageDrawable(ForWardon);
                         ForWard.invalidateDrawable(ForWardon);
                         break;
@@ -423,7 +480,7 @@ public class Main extends Activity implements
                 {
                     case MotionEvent.ACTION_DOWN:
                         mVibrator.vibrate(100);
-                        mWiFiCarControler.sendCommand(Constant.COMM_BACKWARD);  //发送后退命令
+                        mWiFiCarControler.sendCommand(Constant.COMM_BACKWARD);  //send back command
                         BackWard.setImageDrawable(BackWardon);
                         BackWard.invalidateDrawable(BackWardon);
                         break;
@@ -540,7 +597,7 @@ public class Main extends Activity implements
                 {
                     case MotionEvent.ACTION_DOWN:
                         mVibrator.vibrate(100);
-                        mWiFiCarControler.sendCommand(Constant.COMM_CAMERA_UP);   //发送相机向上命令
+                        mWiFiCarControler.sendCommand(Constant.COMM_CAMERA_UP);   //send camera Up command
                         CameraUp.setImageDrawable(CameraUpon);
                         CameraUp.invalidateDrawable(CameraUpon);
                         break;
@@ -561,7 +618,7 @@ public class Main extends Activity implements
                 {
                     case MotionEvent.ACTION_DOWN:
                         mVibrator.vibrate(100);
-                        mWiFiCarControler.sendCommand(Constant.COMM_CAMERA_DOWN);   //发送相机向下命令
+                        mWiFiCarControler.sendCommand(Constant.COMM_CAMERA_DOWN);   //send camera down command
                         CameraDown.setImageDrawable(CameraDownon);
                         CameraDown.invalidateDrawable(CameraDownon);
                         break;
@@ -575,6 +632,8 @@ public class Main extends Activity implements
             }
         });
 
+        /*
+
         CameraLeft.setOnTouchListener( new View.OnTouchListener(){
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction();
@@ -582,7 +641,7 @@ public class Main extends Activity implements
                 {
                     case MotionEvent.ACTION_DOWN:
                         mVibrator.vibrate(100);
-                        mWiFiCarControler.sendCommand(Constant.COMM_CAMERA_LEFT);   //发送相机向下命令
+                        mWiFiCarControler.sendCommand(Constant.COMM_CAMERA_LEFT);   //send camera left command
                         CameraLeft.setImageDrawable(CameraLefton);
                         CameraLeft.invalidateDrawable(CameraLefton);
                         break;
@@ -596,6 +655,8 @@ public class Main extends Activity implements
             }
         });
 
+
+
         CameraRight.setOnTouchListener( new View.OnTouchListener(){
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction();
@@ -603,7 +664,7 @@ public class Main extends Activity implements
                 {
                     case MotionEvent.ACTION_DOWN:
                         mVibrator.vibrate(100);
-                        mWiFiCarControler.sendCommand(Constant.COMM_CAMERA_RIGHT);   //发送相机向下命令
+                        mWiFiCarControler.sendCommand(Constant.COMM_CAMERA_RIGHT);   //send camera right command
                         CameraRight.setImageDrawable(CameraRighton);
                         CameraRight.invalidateDrawable(CameraRighton);
                         break;
@@ -617,6 +678,8 @@ public class Main extends Activity implements
             }
         });
 
+        */
+
         CameraSwitch.setOnTouchListener( new View.OnTouchListener(){
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction();
@@ -625,7 +688,7 @@ public class Main extends Activity implements
                     case MotionEvent.ACTION_DOWN:
                         if(flagcamera == 0)
                         {
-                            flagcamera = 1;
+                            flagcamera = 1; //variable used to ditermine
                             mVibrator.vibrate(100);
                             mWiFiCarControler.sendCommand(COMM_CAMERA_ON);   //Send Sever Position
                             CameraSwitch.setImageDrawable(CameraSwitchon);
@@ -648,7 +711,7 @@ public class Main extends Activity implements
 
 
         //***********************
-        //暂时不清楚这个方法的意思
+        //temporary unclear the meaning of this method
         //***********************
         SensorEventListener lsn = new SensorEventListener(){
             public void onSensorChanged (SensorEvent e){
@@ -659,37 +722,37 @@ public class Main extends Activity implements
 
                     if (x < 2)
                     {
-                        //不要一直重复发送命令造成单片机负担
+                        //don't always send commands repeadetly caused by the micro controller
                         if(lastCommand != Constant.COMM_FORWARD[2]){
-                            mWiFiCarControler.sendCommand(Constant.COMM_FORWARD);   //发送前进命令//前进
+                            mWiFiCarControler.sendCommand(Constant.COMM_FORWARD);   //send forward command //forward
                         }
                         lastCommand = Constant.COMM_FORWARD[2];
                     }
                     else if (x > 7)
                     {
                         if(lastCommand != Constant.COMM_FORWARD[2]){
-                            mWiFiCarControler.sendCommand(Constant.COMM_BACKWARD);  //发送后退命令//后退
+                            mWiFiCarControler.sendCommand(Constant.COMM_BACKWARD);  //send back command //Backward
                         }
                         lastCommand = Constant.COMM_BACKWARD[2];
                     }
                     else if (y < -1)
                     {
                         if(lastCommand != Constant.COMM_LEFT[2]){
-                            mWiFiCarControler.sendCommand(Constant.COMM_LEFT);  //发送后退命令//左
+                            mWiFiCarControler.sendCommand(Constant.COMM_LEFT);  //send left command //left
                         }
                         lastCommand = Constant.COMM_LEFT[2];
                     }
                     else if (y > 1)
                     {
                         if(lastCommand != Constant.COMM_RIGHT[2]){
-                            mWiFiCarControler.sendCommand(Constant.COMM_RIGHT);  //发送后退命令//右
+                            mWiFiCarControler.sendCommand(Constant.COMM_RIGHT);  //send Right command //Right
                         }
                         lastCommand = Constant.COMM_RIGHT[2];
                     }
                     else
                     {
                         if(lastCommand != Constant.COMM_STOP[2]){
-                            mWiFiCarControler.sendCommand(Constant.COMM_STOP);  //发送后退命令//停
+                            mWiFiCarControler.sendCommand(Constant.COMM_STOP);  //Send Back command //Stop
                         }
                         lastCommand = Constant.COMM_STOP[2];
                     }
@@ -701,14 +764,14 @@ public class Main extends Activity implements
         mSensorMgr.registerListener (lsn, sensor, SensorManager.SENSOR_DELAY_GAME);
 
         gravityDetectToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                                                           public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                                               if (isChecked) {
-                                                                   bGravityDetectOn = true;
-                                                               }else {
-                                                                   bGravityDetectOn = false;
-                                                               }
-                                                           }
-                                                       }
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    bGravityDetectOn = true;
+                }
+                else {
+                    bGravityDetectOn = false;
+                }
+            }}
         );
 
         speedChangeCheckBox.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener()
@@ -717,17 +780,20 @@ public class Main extends Activity implements
             {
                 if (isChecked){
                     //editText1.setText(buttonView.getText() + "选中");
+
                     mSpeedSeekBar1.setVisibility(View.VISIBLE);
-                    mSpeedSeekBar2.setVisibility(View.VISIBLE);
+                    //mSpeedSeekBar2.setVisibility(View.VISIBLE);
                     editTextSpeed1.setVisibility(View.VISIBLE);
-                    editTextSpeed2.setVisibility(View.VISIBLE);
+                    //editTextSpeed2.setVisibility(View.VISIBLE);
+
                 }
                 else{
                     //editText1.setText(buttonView.getText() + "取消选中");
+
                     mSpeedSeekBar1.setVisibility(View.INVISIBLE);
-                    mSpeedSeekBar2.setVisibility(View.INVISIBLE);
+                    //mSpeedSeekBar2.setVisibility(View.INVISIBLE);
                     editTextSpeed1.setVisibility(View.INVISIBLE);
-                    editTextSpeed2.setVisibility(View.INVISIBLE);
+                    //editTextSpeed2.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -751,16 +817,45 @@ public class Main extends Activity implements
                 return false;
             }
         });
-        editTextSpeed2.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
+
+
+        //connect
+        //connectToRouter(m4test);   //Connection to router here no longer connected   在onResume中连接
+        //245368746(little white love QQ)
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
+
+
+        Vac_Box.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged (CompoundButton buttonView, boolean isChecked)
+            {
+                if (isChecked){
+                    //editTextVac.setText(buttonView.getText() + "checked");
+                    VacSeekBar.setVisibility(View.VISIBLE);
+                    editTextVac.setVisibility(View.VISIBLE);
+                }
+                else{
+                    //editTextVac.setText(buttonView.getText() + "unchecked");
+                    VacSeekBar.setVisibility(View.INVISIBLE);
+                    editTextVac.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        //TODO: get the hex code for Vac
+
+        editTextVac.setOnEditorActionListener(new OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                String str = editTextSpeed2.getText().toString();
+
+                String str = editTextVac.getText().toString();
                 int value = Integer.parseInt(str);
-                mSpeedSeekBar2.setProgress(value);
+                VacSeekBar.setProgress(value);
 
                 Message msg = new Message();
                 msg.what = Constant.MSG_ID_SET_SPEED;
-                //拆分并转换一个int为两个byte 十六进制
+                //split and convert an INT to a 2 byte Hex
                 //Constant.COMM_SPEED_VALUE_2[2] = (byte)(value >> 8);
                 Constant.COMM_SPEED_VALUE_2[2] = 0x02;
                 Constant.COMM_SPEED_VALUE_2[3] = (byte)(value);
@@ -770,9 +865,82 @@ public class Main extends Activity implements
                 return false;
             }
         });
-        //connect
-        //connectToRouter(m4test);   //连接路由器  这里不用再连接了   在onResume中连接
-        //245368746(小白热爱的QQ)
+
+        Water_Box.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged (CompoundButton buttonView, boolean isChecked)
+            {
+                if (isChecked){
+                    WaterSeekBar.setVisibility(View.VISIBLE);
+                    editTextWater.setVisibility(View.VISIBLE);
+                }
+                else{
+                    WaterSeekBar.setVisibility(View.INVISIBLE);
+                    editTextWater.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        //TODO: get the hex code for water
+
+        editTextWater.setOnEditorActionListener(new OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                String str = editTextWater.getText().toString();
+                int value = Integer.parseInt(str);
+                WaterSeekBar.setProgress(value);
+                /*
+                Message msg = new Message();
+                msg.what = Constant.MSG_ID_SET_SPEED;
+                Constant.COMM_SPEED_VALUE_1[2] = 0x01;
+                Constant.COMM_SPEED_VALUE_1[3] = (byte)(value);
+                Log.i("speed", "set speed(decimal):"+value);
+                msg.obj = Constant.COMM_SPEED_VALUE_1;
+                mHandler.sendMessage(msg);
+                */
+                return false;
+            }
+        });
+
+        Light_Box.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged (CompoundButton buttonView, boolean isChecked)
+            {
+                if (isChecked){
+                    LightSeekBar.setVisibility(View.VISIBLE);
+                    editTextLight.setVisibility(View.VISIBLE);
+                }
+                else{
+                    LightSeekBar.setVisibility(View.INVISIBLE);
+                    editTextLight.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        //TODO: get the hex code for water
+
+        editTextLight.setOnEditorActionListener(new OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                String str = editTextLight.getText().toString();
+                int value = Integer.parseInt(str);
+                LightSeekBar.setProgress(value);
+                /*
+                Message msg = new Message();
+                msg.what = Constant.MSG_ID_SET_SPEED;
+                Constant.COMM_SPEED_VALUE_1[2] = 0x01;
+                Constant.COMM_SPEED_VALUE_1[3] = (byte)(value);
+                Log.i("speed", "set speed(decimal):"+value);
+                msg.obj = Constant.COMM_SPEED_VALUE_1;
+                mHandler.sendMessage(msg);
+                */
+                return false;
+            }
+        });
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
     }
 
 
@@ -797,7 +965,7 @@ public class Main extends Activity implements
         }
     };
 
-    //照相
+    //Camera
     private OnClickListener buttonTakePicClickListener = new OnClickListener() {
         public void onClick(View arg0) {
             mVibrator.vibrate(100);
@@ -828,7 +996,7 @@ public class Main extends Activity implements
                 if (null != mThreadClient)
                     mThreadClient.join(); // wait for second to finish
             } catch (InterruptedException e) {
-                Log.i("mLogText","关闭路由器监听进程失败。。。" +  e.getMessage());
+                Log.i("mLogText","close the router, listening process failed。。。" +  e.getMessage());
             }
             return false;
         }
@@ -853,7 +1021,7 @@ public class Main extends Activity implements
 //			 settings.edit().putString(Constant.PREF_KEY_CAMERA_URL_TEST, Constant.DEFAULT_VALUE_CAMERA_URL_TEST);
 //		 }
 
-        //DEFAULT_VALUE_ROUTER_URL是获取sharedPreference失败后的默认地址
+        //DEFAULT_VALUE_ROUTER_URL is to get sharedPreference the default address after failure
         String RouterUrl = settings.getString(Constant.PREF_KEY_ROUTER_URL, Constant.DEFAULT_VALUE_ROUTER_URL);
         int index = RouterUrl.indexOf(":");
         String routerIP = "";
@@ -1012,6 +1180,11 @@ public class Main extends Activity implements
             }
         }
     }
+
+
+
+
+    // this is to display the value change on Seekbar and sending the change in value to the DSP
     public void onProgressChanged(android.widget.SeekBar seekBar, int progress, boolean fromUser) {
         if(seekBar == mSpeedSeekBar1){
             if (Math.abs(progress - mSpeedSeekBarValue1) > MIN_GEAR_STEP_1) {
@@ -1021,7 +1194,7 @@ public class Main extends Activity implements
 
                 Message msg = new Message();
                 msg.what = Constant.MSG_ID_SET_SPEED;
-                //拆分并转换一个int为两个byte 十六进制
+                //split and convert an Int to 2 byte Hex
                 //Constant.COMM_SPEED_VALUE_1[2] = (byte)(progress >> 8);
                 Constant.COMM_SPEED_VALUE_1[2] = 0x01;
                 Constant.COMM_SPEED_VALUE_1[3] = (byte)(progress);
@@ -1030,15 +1203,17 @@ public class Main extends Activity implements
                 msg.obj = Constant.COMM_SPEED_VALUE_1;
                 mHandler.sendMessage(msg);
             }
-        }else if(seekBar == mSpeedSeekBar2){
+        }
+        else if(seekBar == mSpeedSeekBar2){
             if (Math.abs(progress - mSpeedSeekBarValue2) > MIN_GEAR_STEP_2) {
                 Log.i("mLogText","change speed: " + progress);
                 editTextSpeed2.setText(progress+"");
                 mSpeedSeekBarValue2 = progress;
 
+                /*
                 Message msg = new Message();
                 msg.what = Constant.MSG_ID_SET_SPEED;
-                //拆分并转换一个int为两个byte 十六进制
+                //split and convert an Int to 2 byte Hex
                 //Constant.COMM_SPEED_VALUE_2[2] = (byte)(progress >> 8);
                 Constant.COMM_SPEED_VALUE_2[2] = 0x02;
                 Constant.COMM_SPEED_VALUE_2[3] = (byte)(progress);
@@ -1046,6 +1221,67 @@ public class Main extends Activity implements
                 Log.i("speed", "set speed:"+progress);
                 msg.obj = Constant.COMM_SPEED_VALUE_2;
                 mHandler.sendMessage(msg);
+                */
+            }
+        }
+        else if(seekBar == VacSeekBar) {
+            if (Math.abs(progress - VacSeekBar_Value) > Vac_Min_Value) {
+                Log.i("mLogText", "change speed: " + progress);
+                editTextVac.setText(progress + "");
+                VacSeekBar_Value = progress;
+
+
+                Message msg = new Message();
+                msg.what = Constant.MSG_ID_SET_SPEED;
+                //split and convert an Int to 2 byte Hex
+                //Constant.COMM_SPEED_VALUE_2[2] = (byte)(progress >> 8);
+                Constant.COMM_SPEED_VALUE_2[2] = 0x02;
+                Constant.COMM_SPEED_VALUE_2[3] = (byte) (progress);
+                //Log.i("speed", "set speed(十进制):"+progress);
+                Log.i("speed", "set speed:" + progress);
+                msg.obj = Constant.COMM_SPEED_VALUE_2;
+                mHandler.sendMessage(msg);
+
+            }
+        }
+        else if(seekBar == WaterSeekBar) {
+            if (Math.abs(progress - WaterSeekBar_Value) > Water_Min_Value) {
+                Log.i("mLogText", "change speed: " + progress);
+                editTextWater.setText(progress + "");
+                WaterSeekBar_Value = progress;
+
+                /*
+                Message msg = new Message();
+                msg.what = Constant.MSG_ID_SET_SPEED;
+                //split and convert an Int to 2 byte Hex
+                //Constant.COMM_SPEED_VALUE_2[2] = (byte)(progress >> 8);
+                Constant.COMM_SPEED_VALUE_2[2] = 0x02;
+                Constant.COMM_SPEED_VALUE_2[3] = (byte) (progress);
+                //Log.i("speed", "set speed(十进制):"+progress);
+                Log.i("speed", "set speed:" + progress);
+                msg.obj = Constant.COMM_SPEED_VALUE_2;
+                mHandler.sendMessage(msg);
+                */
+            }
+        }
+        else if(seekBar == LightSeekBar) {
+            if (Math.abs(progress - LightSeekBar_Value) > Light_Min_Value) {
+                Log.i("mLogText", "change speed: " + progress);
+                editTextLight.setText(progress + "");
+                LightSeekBar_Value = progress;
+
+                /*
+                Message msg = new Message();
+                msg.what = Constant.MSG_ID_SET_SPEED;
+                //split and convert an Int to 2 byte Hex
+                //Constant.COMM_SPEED_VALUE_2[2] = (byte)(progress >> 8);
+                Constant.COMM_SPEED_VALUE_2[2] = 0x02;
+                Constant.COMM_SPEED_VALUE_2[3] = (byte) (progress);
+                //Log.i("speed", "set speed(十进制):"+progress);
+                Log.i("speed", "set speed:" + progress);
+                msg.obj = Constant.COMM_SPEED_VALUE_2;
+                mHandler.sendMessage(msg);
+                */
             }
         }
     }
