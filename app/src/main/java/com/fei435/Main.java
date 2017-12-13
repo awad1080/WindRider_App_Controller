@@ -1,4 +1,5 @@
 package com.fei435;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
@@ -10,6 +11,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,6 +24,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -39,6 +43,7 @@ import static com.fei435.Constant.COMM_CAMERA_ON;
 import static com.fei435.Constant.COMM_SERVO;
 import static com.fei435.Constant.COMM_SUCTION_OFF;
 import static com.fei435.Constant.COMM_SUCTION_ON;
+import static com.fei435.Constant.DEFAULT_VALUE_CAMERA_URL;
 
 public class Main extends Activity implements
         com.fei435.SeekBar.OnSeekBarChangeListener,android.widget.SeekBar.OnSeekBarChangeListener  //horizontal and vertical respectively SeekBar
@@ -72,6 +77,7 @@ public class Main extends Activity implements
 
     public static int flagsuction = 0;
     public static int flagcamera = 0;
+    public static int flagLED = 0;
 
     private ImageButton ForWard;  //button class, representing a button
     private ImageButton BackWard;
@@ -284,6 +290,7 @@ public class Main extends Activity implements
     };
 
 
+    @TargetApi(Build.VERSION_CODES.ECLAIR_MR1)
     @Override
     public void onCreate(Bundle savedInstanceState) {   //each one android App一the function that will be called when started
         super.onCreate(savedInstanceState);
@@ -357,8 +364,8 @@ public class Main extends Activity implements
         Servoon = getResources().getDrawable(R.drawable.sym_stop_1);
         Servooff = getResources().getDrawable(R.drawable.sym_stop);
 
-        Suctionon = getResources().getDrawable(R.drawable.sym_stop_1);
-        Suctionoff = getResources().getDrawable(R.drawable.sym_stop);
+        Suctionon = getResources().getDrawable(R.drawable.sym_suction_1);
+        Suctionoff = getResources().getDrawable(R.drawable.sym_suction);
 
         //My Button
         CameraUpon = getResources().getDrawable(R.drawable.sym_forward_1);
@@ -449,6 +456,8 @@ public class Main extends Activity implements
 
 
         buttonLen.setKeepScreenOn(true); //keep the screen long
+
+
 
         ForWard.setOnTouchListener( new View.OnTouchListener(){
             public boolean onTouch(View v, MotionEvent event) {
@@ -710,6 +719,72 @@ public class Main extends Activity implements
         });
 
 
+        // Light switch
+        /*
+        Light.setOnTouchListener( new View.OnTouchListener(){
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch(action)
+                {
+                    case MotionEvent.ACTION_DOWN:
+                        if(flagsuction == 0)
+                        {
+                            flagsuction = 1;
+                            mVibrator.vibrate(100);
+                            Light.setImageDrawable();
+                            Light.invalidateDrawable();
+                            LightSeekBar.setVisibility(View.VISIBLE);
+                            editTextLight.setVisibility(View.VISIBLE);
+                            break;
+                        }
+                        else
+                        {
+                            flagsuction = 0;
+                            mVibrator.vibrate(100);
+                            Light.setImageDrawable(Suctionoff);
+                            Light.invalidateDrawable(Suctionoff);
+                            break;
+                        }
+                }
+                return false;
+            }
+        });
+         */
+
+        //LED MODULE ON
+        //
+        /*
+        Led.setOnTouchListener( new View.OnTouchListener(){
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch(action)
+                {
+                    case MotionEvent.ACTION_DOWN:
+                        if(flagLED == 0)
+                        {
+                            flagLED = 1;
+                            mVibrator.vibrate(100);
+                            mWiFiCarControler.sendCommand(COMM_LED_ON);   //Send  LED switch ON
+                            Suction.setImageDrawable(LEDon);
+                            Suction.invalidateDrawable(LEDon);
+                            break;
+                        }
+                        else
+                        {
+                            flagLED = 0;
+                            mVibrator.vibrate(100);
+                            mWiFiCarControler.sendCommand(COMM_LED_OFF);   //Send LED switch OFF
+                            Suction.setImageDrawable(LEDoff);
+                            Suction.invalidateDrawable(LEDoff);
+                            break;
+                        }
+                }
+                return false;
+            }
+        });
+        */
+
+
         //***********************
         //temporary unclear the meaning of this method
         //***********************
@@ -761,6 +836,7 @@ public class Main extends Activity implements
             public void onAccuracyChanged (Sensor s, int accuracy){
             }
         };
+
         mSensorMgr.registerListener (lsn, sensor, SensorManager.SENSOR_DELAY_GAME);
 
         gravityDetectToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -881,7 +957,7 @@ public class Main extends Activity implements
             }
         });
 
-        //TODO: get the hex code for water
+        //TODO: create the hex code for water
 
         editTextWater.setOnEditorActionListener(new OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -917,7 +993,7 @@ public class Main extends Activity implements
             }
         });
 
-        //TODO: get the hex code for water
+        //TODO: create the hex code for water
 
         editTextLight.setOnEditorActionListener(new OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -937,6 +1013,21 @@ public class Main extends Activity implements
                 return false;
             }
         });
+
+        WebView mWebView=(WebView) findViewById(R.id.webview);
+
+        //allow zoom in and out controls
+        mWebView.getSettings().setJavaScriptEnabled(true);
+
+        //zoom out to best fit the screen
+        mWebView.getSettings().setLoadWithOverviewMode(true);
+        mWebView.getSettings().setUseWideViewPort(true);
+
+        //load the stream link
+        mWebView.loadUrl(DEFAULT_VALUE_CAMERA_URL);
+
+        //set the view to be explicitly on the webview widget
+        mWebView.setWebViewClient(new InsideWebViewClient());
 
 
 
@@ -1104,7 +1195,7 @@ public class Main extends Activity implements
 
         switch (cmd2) {
             case (byte)0xE1:
-                //Log.i("heart","收到小车心跳包 ！");
+                //Log.i("heart","Recived Car Heart Beat Package ！");
                 Log.i("heart","Received Heartbeat");
                 handleHeartBreak();
                 break;
@@ -1181,8 +1272,7 @@ public class Main extends Activity implements
         }
     }
 
-
-
+    
 
     // this is to display the value change on Seekbar and sending the change in value to the DSP
     public void onProgressChanged(android.widget.SeekBar seekBar, int progress, boolean fromUser) {
@@ -1350,8 +1440,17 @@ public class Main extends Activity implements
 
     }
 
+    private class InsideWebViewClient extends WebViewClient {
+        // Force links to be opened inside WebView and not in Default Browser
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+
+        }
+    }
+
     //*******************
-    //读取手柄方法
+    //read the handle method
     //********************
 
     @Override
@@ -1442,6 +1541,6 @@ public class Main extends Activity implements
     }
 
     //*******************
-    //读取手柄方法完
+    //reed the handle method is finished
     //********************
 }

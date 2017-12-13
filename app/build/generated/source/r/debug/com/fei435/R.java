@@ -23,13 +23,16 @@ public final class R {
     public static final int sym_left=0x7f01000b;
     public static final int sym_left_1=0x7f01000c;
     public static final int sym_light=0x7f01000d;
-    public static final int sym_light_off=0x7f01000e;
-    public static final int sym_right=0x7f01000f;
-    public static final int sym_right_1=0x7f010010;
-    public static final int sym_setting=0x7f010011;
-    public static final int sym_stop=0x7f010012;
-    public static final int sym_stop_1=0x7f010013;
-    public static final int take_pic=0x7f010014;
+    public static final int sym_light_1=0x7f01000e;
+    public static final int sym_light_off=0x7f01000f;
+    public static final int sym_right=0x7f010010;
+    public static final int sym_right_1=0x7f010011;
+    public static final int sym_setting=0x7f010012;
+    public static final int sym_stop=0x7f010013;
+    public static final int sym_stop_1=0x7f010014;
+    public static final int sym_suction=0x7f010015;
+    public static final int sym_suction_1=0x7f010016;
+    public static final int take_pic=0x7f010017;
   }
   public static final class id {
     public static final int ButtonCus1=0x7f020000;
@@ -67,6 +70,7 @@ public final class R {
     public static final int speedChangeCheckbox=0x7f020020;
     public static final int textViewAuthor=0x7f020021;
     public static final int textViewName=0x7f020022;
+    public static final int webview=0x7f020023;
   }
   public static final class layout {
     public static final int main=0x7f030000;

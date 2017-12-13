@@ -16,7 +16,7 @@ public class Constant {
 	//after installing the app for the first time，还没有启动过，没有创建sharedPreference
 	//these values are sharedPreference the default value
 	//TODO:change these values after the project is complete
-	public static final String DEFAULT_VALUE_CAMERA_URL = "http://192.168.1.91:5000/?action=stream";
+	public static final String DEFAULT_VALUE_CAMERA_URL = "http://192.168.1.91:5000/";
 	public static final String DEFAULT_VALUE_ROUTER_URL = "192.168.128.135:2001";
 	public static final String DEFAULT_VALUE_CAMERA_URL_TEST = "http://192.168.128.135:8080/?action=stream";
 	public static final String DEFAULT_VALUE_ROUTER_URL_TEST = "192.168.128.135:2001";
@@ -106,16 +106,18 @@ public class Constant {
 	public static byte[] COMM_GEAR_CONTROL_2 =   {(byte) 0xFF, (byte)0x01, (byte)0x02, (byte)0x00, (byte) 0xFE};
 
 	public static byte[] COMM_CAMERA_OFF = {(byte) 0xFF, (byte)0x02, (byte)0x00, (byte)0x00, (byte) 0xFE};
-	public static byte[] COMM_CAMERA_ON = {(byte) 0xFF, (byte)0x02, (byte)0x01, (byte)0x00, (byte) 0xFE};
-	public static byte[] COMM_CAMERA_LEFT = {(byte) 0xFF, (byte)0x02, (byte)0x02, (byte)0x00, (byte) 0xFE};
-	public static byte[] COMM_CAMERA_RIGHT = {(byte) 0xFF, (byte)0x02, (byte)0x04, (byte)0x00, (byte) 0xFE};
-	public static byte[] COMM_CAMERA_UP = {(byte) 0xFF, (byte)0x02, (byte)0x08, (byte)0x00, (byte) 0xFE};
-	public static byte[] COMM_CAMERA_DOWN = {(byte) 0xFF, (byte)0x02, (byte)0x10, (byte)0x00, (byte) 0xFE};
+	public static byte[] COMM_CAMERA_ON =  {(byte) 0xFF, (byte)0x02, (byte)0x01, (byte)0x00, (byte) 0xFE};
+	public static byte[] COMM_CAMERA_LEFT ={(byte) 0xFF, (byte)0x02, (byte)0x02, (byte)0x00, (byte) 0xFE};
+	public static byte[] COMM_CAMERA_RIGHT={(byte) 0xFF, (byte)0x02, (byte)0x04, (byte)0x00, (byte) 0xFE};
+	public static byte[] COMM_CAMERA_UP =  {(byte) 0xFF, (byte)0x02, (byte)0x08, (byte)0x00, (byte) 0xFE};
+	public static byte[] COMM_CAMERA_DOWN ={(byte) 0xFF, (byte)0x02, (byte)0x10, (byte)0x00, (byte) 0xFE};
 
 
 	//initial velocity 506  16                                                         0x32 = 50 in decimal that's where you change it
 	public static byte[] COMM_SPEED_VALUE_1 =   {(byte) 0xFF, (byte)0x05, (byte)0x01, (byte)0x32, (byte) 0xFE};//speed of motion motor
 	public static byte[] COMM_SPEED_VALUE_2 =   {(byte) 0xFF, (byte)0x05, (byte)0x02, (byte)0x32, (byte) 0xFE};//speed of suction motor
+	public static byte[] COMM_SPEED_VALUE_3 =   {(byte) 0xFF, (byte)0x05, (byte)0x03, (byte)0x32, (byte) 0xFE};//epwm command for LED intensity
+	public static byte[] COMM_SPEED_VALUE_4 =   {(byte) 0xFF, (byte)0x05, (byte)0x04, (byte)0x32, (byte) 0xFE};//water power
 
 	public static byte[] COMM_SELF_CHECK =     {(byte) 0xFF, (byte)0xEE, (byte)0xEE, 0x00, (byte) 0xFE};
 	public static byte[] COMM_SELF_CHECK_ALL = {(byte) 0xFF, (byte)0xEE, (byte)0xE0, 0x00, (byte) 0xFE};
@@ -124,8 +126,11 @@ public class Constant {
 
 	public static byte[] COMM_SERVO =   {(byte) 0xFF, (byte)0x04, (byte)0x00, (byte)0x01, (byte) 0xFE};//
 
-	public static byte[] COMM_SUCTION_ON = {(byte) 0xFF, (byte)0x01, (byte)0x01, (byte)0x00, (byte) 0xFE};
+	public static byte[] COMM_SUCTION_ON  = {(byte) 0xFF, (byte)0x01, (byte)0x01, (byte)0x00, (byte) 0xFE};
 	public static byte[] COMM_SUCTION_OFF = {(byte) 0xFF, (byte)0x01, (byte)0x00, (byte)0x00, (byte) 0xFE};
+
+	public static byte[] COMM_LED_ON  = {(byte) 0xFF, (byte)0x00, (byte)0x00, (byte)0x00, (byte) 0xFE};
+	public static byte[] COMM_LED_OFF = {(byte) 0xFF, (byte)0x00, (byte)0x00, (byte)0x00, (byte) 0xFE};
 	/////////////////////////////////////////////////////////
 
 	public static class CommandArray {

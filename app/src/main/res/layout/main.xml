@@ -47,7 +47,7 @@
         android:layout_above="@id/btnBack"
         android:layout_alignLeft="@id/btnBack"
         android:background="#00000000"
-        android:src="@drawable/sym_stop" />
+        android:src="@drawable/sym_suction" />
 
     <ImageButton
         android:id="@+id/btnCamSwitch"
@@ -305,7 +305,8 @@
         android:layout_alignParentLeft="true"
         android:layout_marginTop="155dp"
         android:checked="false"
-        android:text="Light intensity" />
+         />
+
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -346,6 +347,12 @@
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/btnLen"
         android:layout_marginLeft="34dp" />
+
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginLeft="250dp" />
 
 
 </RelativeLayout>
