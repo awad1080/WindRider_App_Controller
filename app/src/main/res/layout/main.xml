@@ -9,16 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent" />
 
-    <ImageButton
-        android:id="@+id/btnCamDown"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:background="#00000000"
-        android:src="@drawable/sym_backward"
-        android:layout_below="@+id/btnCamSwitch"
-        android:layout_alignLeft="@+id/btnCamSwitch" />
-
-
 
     <ImageButton
         android:id="@+id/btnLeft"
@@ -50,15 +40,6 @@
         android:src="@drawable/sym_suction" />
 
     <ImageButton
-        android:id="@+id/btnCamSwitch"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:background="#00000000"
-        android:src="@drawable/sym_stop"
-        android:layout_below="@+id/btnCamUp"
-        android:layout_toLeftOf="@+id/gear2" />
-
-    <ImageButton
         android:id="@+id/btnRight"
         android:layout_width="60dp"
         android:layout_height="40dp"
@@ -77,14 +58,50 @@
         android:background="#00000000"
         android:src="@drawable/sym_forward" />
 
-    <ImageButton
-        android:id="@+id/btnCamUp"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:background="#00000000"
-        android:src="@drawable/sym_forward"
-        android:layout_above="@+id/btnRight"
-        android:layout_toLeftOf="@+id/gear2" />
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="300dp"
+        android:layout_height="250dp"
+        android:layout_marginLeft="150dp" />
+
+    <LinearLayout
+        android:id="@+id/layout_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="470dp"
+        android:layout_marginTop="190dp">
+
+        <ImageButton
+            android:id="@+id/btnCamUp"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_above="@+id/btnRight"
+            android:layout_toLeftOf="@+id/gear2"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:src="@drawable/sym_forward" />
+
+        <ImageButton
+            android:id="@+id/btnCamSwitch"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/btnCamUp"
+            android:layout_toLeftOf="@+id/gear2"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:src="@drawable/sym_stop" />
+
+        <ImageButton
+            android:id="@+id/btnCamDown"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_alignLeft="@+id/btnCamSwitch"
+            android:layout_below="@+id/btnCamSwitch"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:src="@drawable/sym_backward" />
+    </LinearLayout>
 
     <ImageButton
         android:id="@+id/ButtonCus1"
@@ -347,12 +364,6 @@
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/btnLen"
         android:layout_marginLeft="34dp" />
-
-    <WebView
-        android:id="@+id/webview"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginLeft="250dp" />
 
 
 </RelativeLayout>

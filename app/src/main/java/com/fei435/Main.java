@@ -1272,7 +1272,7 @@ public class Main extends Activity implements
         }
     }
 
-    
+
 
     // this is to display the value change on Seekbar and sending the change in value to the DSP
     public void onProgressChanged(android.widget.SeekBar seekBar, int progress, boolean fromUser) {
