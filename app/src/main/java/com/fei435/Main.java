@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.DrawableContainer;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -77,7 +78,9 @@ public class Main extends Activity implements
 
     public static int flagsuction = 0;
     public static int flagcamera = 0;
+    public static int flagspeed = 0;
     public static int flagLED = 0;
+    public static int flagVac=0;
 
     private ImageButton ForWard;  //button class, representing a button
     private ImageButton BackWard;
@@ -95,6 +98,7 @@ public class Main extends Activity implements
     //insert my button
     private ImageButton Servo;
     private ImageButton Suction;
+    private ImageButton Light;
 
     private ImageView mAnimIndicator;
     private boolean bAnimationEnabled = true;
@@ -130,6 +134,15 @@ public class Main extends Activity implements
     private Drawable CameraSwitchon;
     private Drawable CameraSwitchoff;
 
+    private Drawable SpdSettingoff;
+    private Drawable SpdSettingon;
+
+    private Drawable Lightsettingon;
+    private Drawable Lightsettingoff;
+
+    private Drawable Vacsettingson;
+    private Drawable Vacsettingsoff;
+
 
     private com.fei435.SeekBar mSeekBar1;
     private com.fei435.SeekBar mSeekBar2;            //longitudinal realization of their own seekbar,this is a progress bar
@@ -145,7 +158,7 @@ public class Main extends Activity implements
     private android.widget.SeekBar VacSeekBar;
     private int VacSeekBar_Value = -1;
     private EditText editTextVac;
-    private CheckBox Vac_Box;
+    private ImageButton Vac;
 
     private android.widget.SeekBar WaterSeekBar;
     private int WaterSeekBar_Value = -1;
@@ -155,16 +168,16 @@ public class Main extends Activity implements
     private android.widget.SeekBar LightSeekBar;
     private int LightSeekBar_Value =-1;
     private EditText editTextLight;
-    private CheckBox Light_Box;
 
     ///////////////////////////////////////////////////////////////////////////
 
     private ToggleButton gravityDetectToggle;
-    private CheckBox speedChangeCheckBox;
 
     private ImageButton buttonCus1;
     private ImageButton buttonLen;
     private boolean bCaptureOn = false;
+
+    private ImageButton SpdSetting;
 
     private boolean mQuitFlag = false;
     private boolean bHeartBreakFlag = false;//only for a test by fei435
@@ -315,11 +328,11 @@ public class Main extends Activity implements
         TurnRight=(ImageButton)findViewById(R.id.btnRight);
         BackWard= (ImageButton)findViewById(R.id.btnBack);
         gravityDetectToggle = (ToggleButton)findViewById(R.id.gravityToggleButton);
-        speedChangeCheckBox = (CheckBox)findViewById(R.id.speedChangeCheckbox);
         ////////////////////////////////////////////////////////////////////////////////////
-        Vac_Box = (CheckBox)findViewById(R.id.Vac_Box);
+
         Water_Box=(CheckBox)findViewById(R.id.Water_Box);
-        Light_Box=(CheckBox)findViewById(R.id.Light_Box);
+
+        SpdSetting=(ImageButton)findViewById(R.id.spdsettingbtn);
         ////////////////////////////////////////////////////////////////////////////////////
 
         CameraUp = (ImageButton)findViewById(R.id.btnCamUp);
@@ -331,6 +344,8 @@ public class Main extends Activity implements
         //my button
         Servo = (ImageButton)findViewById(R.id.btnServo);
         Suction = (ImageButton)findViewById(R.id.btnStop);
+        Light = (ImageButton)findViewById(R.id.Lightbtn);
+        Vac= (ImageButton)findViewById(R.id.Vac_setting);
 
         buttonCus1= (ImageButton)findViewById(R.id.ButtonCus1);
         buttonCus1.setOnClickListener(buttonCus1ClickListener);
@@ -382,6 +397,16 @@ public class Main extends Activity implements
 
         CameraSwitchon = getResources().getDrawable(R.drawable.sym_stop_1);
         CameraSwitchoff = getResources().getDrawable(R.drawable.sym_stop);
+
+        SpdSettingon= getResources().getDrawable(R.drawable.sym_speed_1);
+        SpdSettingoff= getResources().getDrawable(R.drawable.sym_speed);
+
+        Lightsettingon=getResources().getDrawable(R.drawable.sym_light_1);
+        Lightsettingoff=getResources().getDrawable(R.drawable.sym_light);
+
+        Vacsettingson=getResources().getDrawable(R.drawable.sym_vac_1);
+        Vacsettingsoff=getResources().getDrawable(R.drawable.sym_vac);
+
 
 
         //show video and buttons view,which is MjpegView，backgroundView yes MjpegView example
@@ -718,43 +743,67 @@ public class Main extends Activity implements
             }
         });
 
-
-        // Light switch
-        /*
-        Light.setOnTouchListener( new View.OnTouchListener(){
+        SpdSetting.setOnTouchListener( new View.OnTouchListener(){
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction();
                 switch(action)
                 {
                     case MotionEvent.ACTION_DOWN:
-                        if(flagsuction == 0)
+                        if(flagspeed == 0)
                         {
-                            flagsuction = 1;
+                            flagspeed = 1;
                             mVibrator.vibrate(100);
-                            Light.setImageDrawable();
-                            Light.invalidateDrawable();
-                            LightSeekBar.setVisibility(View.VISIBLE);
-                            editTextLight.setVisibility(View.VISIBLE);
+                            SpdSetting.setImageDrawable(SpdSettingon);
+                            SpdSetting.invalidateDrawable(SpdSettingon);
+                            mSpeedSeekBar1.setVisibility(View.VISIBLE);
+                            //mSpeedSeekBar2.setVisibility(View.VISIBLE);
+                            editTextSpeed1.setVisibility(View.VISIBLE);
+                            //editTextSpeed2.setVisibility(View.VISIBLE);
                             break;
                         }
                         else
                         {
-                            flagsuction = 0;
+                            flagspeed = 0;
                             mVibrator.vibrate(100);
-                            Light.setImageDrawable(Suctionoff);
-                            Light.invalidateDrawable(Suctionoff);
+                            SpdSetting.setImageDrawable(SpdSettingoff);
+                            SpdSetting.invalidateDrawable(SpdSettingoff);
+                            mSpeedSeekBar1.setVisibility(View.INVISIBLE);
+                            //mSpeedSeekBar2.setVisibility(View.INVISIBLE);
+                            editTextSpeed1.setVisibility(View.INVISIBLE);
+                            //editTextSpeed2.setVisibility(View.INVISIBLE);
                             break;
                         }
                 }
                 return false;
             }
         });
-         */
 
-        //LED MODULE ON
-        //
-        /*
-        Led.setOnTouchListener( new View.OnTouchListener(){
+
+        editTextSpeed1.setOnEditorActionListener(new OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                String str = editTextSpeed1.getText().toString();
+                int value = Integer.parseInt(str);
+                mSpeedSeekBar1.setProgress(value);
+
+                Message msg = new Message();
+                msg.what = Constant.MSG_ID_SET_SPEED;
+                //split and convert the int into 2 byte hex
+                //Constant.COMM_SPEED_VALUE_1[2] = (byte)(value >> 8);
+                Constant.COMM_SPEED_VALUE_1[2] = 0x01;
+                Constant.COMM_SPEED_VALUE_1[3] = (byte)(value);
+                Log.i("speed", "set speed(decimal):"+value);
+                msg.obj = Constant.COMM_SPEED_VALUE_1;
+                mHandler.sendMessage(msg);
+                return false;
+            }
+        });
+
+
+
+        // Light switch
+
+        Light.setOnTouchListener( new View.OnTouchListener(){
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction();
                 switch(action)
@@ -764,18 +813,75 @@ public class Main extends Activity implements
                         {
                             flagLED = 1;
                             mVibrator.vibrate(100);
-                            mWiFiCarControler.sendCommand(COMM_LED_ON);   //Send  LED switch ON
-                            Suction.setImageDrawable(LEDon);
-                            Suction.invalidateDrawable(LEDon);
+                            Light.setImageDrawable(Lightsettingon);
+                            Light.invalidateDrawable(Lightsettingon);
+                            LightSeekBar.setVisibility(View.VISIBLE);
+                            editTextLight.setVisibility(View.VISIBLE);
+
                             break;
                         }
                         else
                         {
                             flagLED = 0;
                             mVibrator.vibrate(100);
-                            mWiFiCarControler.sendCommand(COMM_LED_OFF);   //Send LED switch OFF
-                            Suction.setImageDrawable(LEDoff);
-                            Suction.invalidateDrawable(LEDoff);
+                            Light.setImageDrawable(Lightsettingoff);
+                            Light.invalidateDrawable(Lightsettingoff);
+                            LightSeekBar.setVisibility(View.INVISIBLE);
+                            editTextLight.setVisibility(View.INVISIBLE);
+                            break;
+                        }
+                }
+                return false;
+            }
+        });
+
+        editTextLight.setOnEditorActionListener(new OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                String str = editTextLight.getText().toString();
+                int value = Integer.parseInt(str);
+                LightSeekBar.setProgress(value);
+
+                Message msg = new Message();
+                msg.what = Constant.MSG_ID_SET_SPEED;
+                Constant.COMM_SPEED_VALUE_3[2] = 0x03;
+                Constant.COMM_SPEED_VALUE_3[3] = (byte)(value);
+                Log.i("speed", "set speed(decimal):"+value);
+                msg.obj = Constant.COMM_SPEED_VALUE_3;
+                mHandler.sendMessage(msg);
+
+                return false;
+            }
+        });
+
+        /*
+
+
+        Vac.setOnTouchListener( new View.OnTouchListener(){
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch(action)
+                {
+                    case MotionEvent.ACTION_DOWN:
+                        if(flagVac == 0)
+                        {
+                            flagVac = 1;
+                            mVibrator.vibrate(100);
+                            Vac.setImageDrawable(Vacsettingson);
+                            Vac.invalidateDrawable(Vacsettingson);
+                            VacSeekBar.setVisibility(View.VISIBLE);
+                            editTextVac.setVisibility(View.VISIBLE);
+
+                            break;
+                        }
+                        else
+                        {
+                            flagVac = 0;
+                            mVibrator.vibrate(100);
+                            Vac.setImageDrawable(Vacsettingsoff);
+                            Vac.invalidateDrawable(Vacsettingsoff);
+                            VacSeekBar.setVisibility(View.INVISIBLE);
+                            editTextVac.setVisibility(View.INVISIBLE);
                             break;
                         }
                 }
@@ -783,6 +889,31 @@ public class Main extends Activity implements
             }
         });
         */
+
+
+        editTextVac.setOnEditorActionListener(new OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                String str = editTextVac.getText().toString();
+                int value = Integer.parseInt(str);
+                VacSeekBar.setProgress(value);
+
+                Message msg = new Message();
+                msg.what = Constant.MSG_ID_SET_SPEED;
+                //split and convert an INT to a 2 byte Hex
+                //Constant.COMM_SPEED_VALUE_2[2] = (byte)(value >> 8);
+                Constant.COMM_SPEED_VALUE_2[2] = 0x02;
+                Constant.COMM_SPEED_VALUE_2[3] = (byte)(value);
+                Log.i("speed", "set speed(decimal):"+value);
+                msg.obj = Constant.COMM_SPEED_VALUE_2;
+                mHandler.sendMessage(msg);
+                return false;
+            }
+        });
+
+
+
+
 
 
         //***********************
@@ -850,49 +981,8 @@ public class Main extends Activity implements
             }}
         );
 
-        speedChangeCheckBox.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged (CompoundButton buttonView, boolean isChecked)
-            {
-                if (isChecked){
-                    //editText1.setText(buttonView.getText() + "选中");
 
-                    mSpeedSeekBar1.setVisibility(View.VISIBLE);
-                    //mSpeedSeekBar2.setVisibility(View.VISIBLE);
-                    editTextSpeed1.setVisibility(View.VISIBLE);
-                    //editTextSpeed2.setVisibility(View.VISIBLE);
 
-                }
-                else{
-                    //editText1.setText(buttonView.getText() + "取消选中");
-
-                    mSpeedSeekBar1.setVisibility(View.INVISIBLE);
-                    //mSpeedSeekBar2.setVisibility(View.INVISIBLE);
-                    editTextSpeed1.setVisibility(View.INVISIBLE);
-                    //editTextSpeed2.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
-
-        editTextSpeed1.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                String str = editTextSpeed1.getText().toString();
-                int value = Integer.parseInt(str);
-                mSpeedSeekBar1.setProgress(value);
-
-                Message msg = new Message();
-                msg.what = Constant.MSG_ID_SET_SPEED;
-                //拆分并转换一个int为两个byte 十六进制
-                //Constant.COMM_SPEED_VALUE_1[2] = (byte)(value >> 8);
-                Constant.COMM_SPEED_VALUE_1[2] = 0x01;
-                Constant.COMM_SPEED_VALUE_1[3] = (byte)(value);
-                Log.i("speed", "set speed(decimal):"+value);
-                msg.obj = Constant.COMM_SPEED_VALUE_1;
-                mHandler.sendMessage(msg);
-                return false;
-            }
-        });
 
 
         //connect
@@ -903,44 +993,8 @@ public class Main extends Activity implements
         ///////////////////////////////////////////////////////////////////////////////////////////
 
 
-        Vac_Box.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged (CompoundButton buttonView, boolean isChecked)
-            {
-                if (isChecked){
-                    //editTextVac.setText(buttonView.getText() + "checked");
-                    VacSeekBar.setVisibility(View.VISIBLE);
-                    editTextVac.setVisibility(View.VISIBLE);
-                }
-                else{
-                    //editTextVac.setText(buttonView.getText() + "unchecked");
-                    VacSeekBar.setVisibility(View.INVISIBLE);
-                    editTextVac.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
 
-        //TODO: get the hex code for Vac
 
-        editTextVac.setOnEditorActionListener(new OnEditorActionListener() {
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
-                String str = editTextVac.getText().toString();
-                int value = Integer.parseInt(str);
-                VacSeekBar.setProgress(value);
-
-                Message msg = new Message();
-                msg.what = Constant.MSG_ID_SET_SPEED;
-                //split and convert an INT to a 2 byte Hex
-                //Constant.COMM_SPEED_VALUE_2[2] = (byte)(value >> 8);
-                Constant.COMM_SPEED_VALUE_2[2] = 0x02;
-                Constant.COMM_SPEED_VALUE_2[3] = (byte)(value);
-                Log.i("speed", "set speed(decimal):"+value);
-                msg.obj = Constant.COMM_SPEED_VALUE_2;
-                mHandler.sendMessage(msg);
-                return false;
-            }
-        });
 
         Water_Box.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener()
         {
@@ -978,41 +1032,9 @@ public class Main extends Activity implements
             }
         });
 
-        Light_Box.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged (CompoundButton buttonView, boolean isChecked)
-            {
-                if (isChecked){
-                    LightSeekBar.setVisibility(View.VISIBLE);
-                    editTextLight.setVisibility(View.VISIBLE);
-                }
-                else{
-                    LightSeekBar.setVisibility(View.INVISIBLE);
-                    editTextLight.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
 
         //TODO: create the hex code for water
 
-        editTextLight.setOnEditorActionListener(new OnEditorActionListener() {
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
-                String str = editTextLight.getText().toString();
-                int value = Integer.parseInt(str);
-                LightSeekBar.setProgress(value);
-                /*
-                Message msg = new Message();
-                msg.what = Constant.MSG_ID_SET_SPEED;
-                Constant.COMM_SPEED_VALUE_1[2] = 0x01;
-                Constant.COMM_SPEED_VALUE_1[3] = (byte)(value);
-                Log.i("speed", "set speed(decimal):"+value);
-                msg.obj = Constant.COMM_SPEED_VALUE_1;
-                mHandler.sendMessage(msg);
-                */
-                return false;
-            }
-        });
 
         WebView mWebView=(WebView) findViewById(R.id.webview);
 
@@ -1360,18 +1382,18 @@ public class Main extends Activity implements
                 editTextLight.setText(progress + "");
                 LightSeekBar_Value = progress;
 
-                /*
+
                 Message msg = new Message();
                 msg.what = Constant.MSG_ID_SET_SPEED;
                 //split and convert an Int to 2 byte Hex
                 //Constant.COMM_SPEED_VALUE_2[2] = (byte)(progress >> 8);
-                Constant.COMM_SPEED_VALUE_2[2] = 0x02;
-                Constant.COMM_SPEED_VALUE_2[3] = (byte) (progress);
+                Constant.COMM_SPEED_VALUE_3[2] = 0x03;
+                Constant.COMM_SPEED_VALUE_3[3] = (byte) (progress);
                 //Log.i("speed", "set speed(十进制):"+progress);
                 Log.i("speed", "set speed:" + progress);
-                msg.obj = Constant.COMM_SPEED_VALUE_2;
+                msg.obj = Constant.COMM_SPEED_VALUE_3;
                 mHandler.sendMessage(msg);
-                */
+
             }
         }
     }

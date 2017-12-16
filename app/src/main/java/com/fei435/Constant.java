@@ -116,7 +116,7 @@ public class Constant {
 	//initial velocity 506  16                                                         0x32 = 50 in decimal that's where you change it
 	public static byte[] COMM_SPEED_VALUE_1 =   {(byte) 0xFF, (byte)0x05, (byte)0x01, (byte)0x32, (byte) 0xFE};//speed of motion motor
 	public static byte[] COMM_SPEED_VALUE_2 =   {(byte) 0xFF, (byte)0x05, (byte)0x02, (byte)0x32, (byte) 0xFE};//speed of suction motor
-	public static byte[] COMM_SPEED_VALUE_3 =   {(byte) 0xFF, (byte)0x05, (byte)0x03, (byte)0x32, (byte) 0xFE};//epwm command for LED intensity
+	public static byte[] COMM_SPEED_VALUE_3 =   {(byte) 0xFF, (byte)0x05, (byte)0x03, (byte)0x32, (byte) 0xFE};//LED intensity
 	public static byte[] COMM_SPEED_VALUE_4 =   {(byte) 0xFF, (byte)0x05, (byte)0x04, (byte)0x32, (byte) 0xFE};//water power
 
 	public static byte[] COMM_SELF_CHECK =     {(byte) 0xFF, (byte)0xEE, (byte)0xEE, 0x00, (byte) 0xFE};
@@ -129,8 +129,8 @@ public class Constant {
 	public static byte[] COMM_SUCTION_ON  = {(byte) 0xFF, (byte)0x01, (byte)0x01, (byte)0x00, (byte) 0xFE};
 	public static byte[] COMM_SUCTION_OFF = {(byte) 0xFF, (byte)0x01, (byte)0x00, (byte)0x00, (byte) 0xFE};
 
-	public static byte[] COMM_LED_ON  = {(byte) 0xFF, (byte)0x00, (byte)0x00, (byte)0x00, (byte) 0xFE};
-	public static byte[] COMM_LED_OFF = {(byte) 0xFF, (byte)0x00, (byte)0x00, (byte)0x00, (byte) 0xFE};
+	public static byte[] COMM_LED_ON  = {(byte) 0xFF, (byte)0x06, (byte)0x01, (byte)0x00, (byte) 0xFE};
+	public static byte[] COMM_LED_OFF = {(byte) 0xFF, (byte)0x06, (byte)0x00, (byte)0x00, (byte) 0xFE};
 	/////////////////////////////////////////////////////////
 
 	public static class CommandArray {
