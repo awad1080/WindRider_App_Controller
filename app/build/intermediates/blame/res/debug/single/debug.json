@@ -1,11 +1,11 @@
 [
     {
-        "merged": "C:\\Users\\awad1\\Desktop\\ClimbRobotRomoteController\\app\\build\\intermediates\\res\\merged\\debug\\drawable_sym_right.png.flat",
-        "source": "C:\\Users\\awad1\\Desktop\\ClimbRobotRomoteController\\app\\src\\main\\res\\drawable\\sym_right.png"
-    },
-    {
         "merged": "C:\\Users\\awad1\\Desktop\\wall-climbing-robot\\app\\build\\intermediates\\res\\merged\\debug\\drawable_sym_light_1.png.flat",
         "source": "C:\\Users\\awad1\\Desktop\\wall-climbing-robot\\app\\src\\main\\res\\drawable\\sym_light_1.png"
+    },
+    {
+        "merged": "C:\\Users\\awad1\\Desktop\\ClimbRobotRomoteController\\app\\build\\intermediates\\res\\merged\\debug\\drawable_sym_right.png.flat",
+        "source": "C:\\Users\\awad1\\Desktop\\ClimbRobotRomoteController\\app\\src\\main\\res\\drawable\\sym_right.png"
     },
     {
         "merged": "C:\\Users\\awad1\\Desktop\\ClimbRobotRomoteController\\app\\build\\intermediates\\res\\merged\\debug\\drawable_pic_main.jpg.flat",
@@ -60,20 +60,20 @@
         "source": "C:\\Users\\awad1\\Desktop\\ClimbRobotRomoteController\\app\\src\\main\\res\\drawable-hdpi\\icon.png"
     },
     {
-        "merged": "C:\\Users\\awad1\\Desktop\\ClimbRobotRomoteController\\app\\build\\intermediates\\res\\merged\\debug\\drawable_take_pic.png.flat",
-        "source": "C:\\Users\\awad1\\Desktop\\ClimbRobotRomoteController\\app\\src\\main\\res\\drawable\\take_pic.png"
-    },
-    {
         "merged": "C:\\Users\\awad1\\Desktop\\ClimbRobotRomoteController\\app\\build\\intermediates\\res\\merged\\debug\\drawable_sym_setting.png.flat",
         "source": "C:\\Users\\awad1\\Desktop\\ClimbRobotRomoteController\\app\\src\\main\\res\\drawable\\sym_setting.png"
     },
     {
-        "merged": "C:\\Users\\awad1\\Desktop\\ClimbRobotRomoteController\\app\\build\\intermediates\\res\\merged\\debug\\layout_splash.xml.flat",
-        "source": "C:\\Users\\awad1\\Desktop\\ClimbRobotRomoteController\\app\\src\\main\\res\\layout\\splash.xml"
+        "merged": "C:\\Users\\awad1\\Desktop\\ClimbRobotRomoteController\\app\\build\\intermediates\\res\\merged\\debug\\drawable_take_pic.png.flat",
+        "source": "C:\\Users\\awad1\\Desktop\\ClimbRobotRomoteController\\app\\src\\main\\res\\drawable\\take_pic.png"
     },
     {
         "merged": "C:\\Users\\awad1\\Desktop\\ClimbRobotRomoteController\\app\\build\\intermediates\\res\\merged\\debug\\drawable_sym_left.png.flat",
         "source": "C:\\Users\\awad1\\Desktop\\ClimbRobotRomoteController\\app\\src\\main\\res\\drawable\\sym_left.png"
+    },
+    {
+        "merged": "C:\\Users\\awad1\\Desktop\\ClimbRobotRomoteController\\app\\build\\intermediates\\res\\merged\\debug\\layout_splash.xml.flat",
+        "source": "C:\\Users\\awad1\\Desktop\\ClimbRobotRomoteController\\app\\src\\main\\res\\layout\\splash.xml"
     },
     {
         "merged": "C:\\Users\\awad1\\Desktop\\wall-climbing-robot\\app\\build\\intermediates\\res\\merged\\debug\\drawable_sym_suction.png.flat",

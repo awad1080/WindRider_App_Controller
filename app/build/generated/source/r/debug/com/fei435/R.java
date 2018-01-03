@@ -44,7 +44,7 @@ public final class R {
     public static final int LightSeekBar=0x7f020002;
     public static final int Lightbtn=0x7f020003;
     public static final int VacSeekBar=0x7f020004;
-    public static final int Vac_Box=0x7f020005;
+    public static final int Vac_Setting=0x7f020005;
     public static final int Vac_setting=0x7f020006;
     public static final int WaterSeekBar=0x7f020007;
     public static final int Water_Box=0x7f020008;

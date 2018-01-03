@@ -140,8 +140,8 @@ public class Main extends Activity implements
     private Drawable Lightsettingon;
     private Drawable Lightsettingoff;
 
-    private Drawable Vacsettingson;
-    private Drawable Vacsettingsoff;
+    private Drawable Vacsettingon;
+    private Drawable Vacsettingoff;
 
 
     private com.fei435.SeekBar mSeekBar1;
@@ -345,7 +345,7 @@ public class Main extends Activity implements
         Servo = (ImageButton)findViewById(R.id.btnServo);
         Suction = (ImageButton)findViewById(R.id.btnStop);
         Light = (ImageButton)findViewById(R.id.Lightbtn);
-        Vac= (ImageButton)findViewById(R.id.Vac_setting);
+        Vac= (ImageButton)findViewById(R.id.Vac_Setting);
 
         buttonCus1= (ImageButton)findViewById(R.id.ButtonCus1);
         buttonCus1.setOnClickListener(buttonCus1ClickListener);
@@ -404,8 +404,8 @@ public class Main extends Activity implements
         Lightsettingon=getResources().getDrawable(R.drawable.sym_light_1);
         Lightsettingoff=getResources().getDrawable(R.drawable.sym_light);
 
-        Vacsettingson=getResources().getDrawable(R.drawable.sym_vac_1);
-        Vacsettingsoff=getResources().getDrawable(R.drawable.sym_vac);
+        Vacsettingon=getResources().getDrawable(R.drawable.sym_vac_1);
+        Vacsettingoff=getResources().getDrawable(R.drawable.sym_vac);
 
 
 
@@ -854,8 +854,7 @@ public class Main extends Activity implements
             }
         });
 
-        /*
-
+        // vacuum button
 
         Vac.setOnTouchListener( new View.OnTouchListener(){
             public boolean onTouch(View v, MotionEvent event) {
@@ -863,12 +862,12 @@ public class Main extends Activity implements
                 switch(action)
                 {
                     case MotionEvent.ACTION_DOWN:
-                        if(flagVac == 0)
+                        if(flagVac== 0)
                         {
-                            flagVac = 1;
+                            flagVac= 1;
                             mVibrator.vibrate(100);
-                            Vac.setImageDrawable(Vacsettingson);
-                            Vac.invalidateDrawable(Vacsettingson);
+                            Vac.setImageDrawable(Vacsettingon);
+                            Vac.invalidateDrawable(Vacsettingon);
                             VacSeekBar.setVisibility(View.VISIBLE);
                             editTextVac.setVisibility(View.VISIBLE);
 
@@ -876,10 +875,10 @@ public class Main extends Activity implements
                         }
                         else
                         {
-                            flagVac = 0;
+                            flagVac= 0;
                             mVibrator.vibrate(100);
-                            Vac.setImageDrawable(Vacsettingsoff);
-                            Vac.invalidateDrawable(Vacsettingsoff);
+                            Vac.setImageDrawable(Vacsettingoff);
+                            Vac.invalidateDrawable(Vacsettingoff);
                             VacSeekBar.setVisibility(View.INVISIBLE);
                             editTextVac.setVisibility(View.INVISIBLE);
                             break;
@@ -888,8 +887,6 @@ public class Main extends Activity implements
                 return false;
             }
         });
-        */
-
 
         editTextVac.setOnEditorActionListener(new OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
