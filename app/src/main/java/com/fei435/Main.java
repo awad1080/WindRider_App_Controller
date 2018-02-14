@@ -41,6 +41,8 @@ import com.fei435.Constant.CommandArray;
 
 import static com.fei435.Constant.COMM_CAMERA_OFF;
 import static com.fei435.Constant.COMM_CAMERA_ON;
+import static com.fei435.Constant.COMM_LED_OFF;
+import static com.fei435.Constant.COMM_LED_ON;
 import static com.fei435.Constant.COMM_SERVO;
 import static com.fei435.Constant.COMM_SUCTION_OFF;
 import static com.fei435.Constant.COMM_SUCTION_ON;
@@ -813,10 +815,11 @@ public class Main extends Activity implements
                         {
                             flagLED = 1;
                             mVibrator.vibrate(100);
+                            mWiFiCarControler.sendCommand(COMM_LED_ON);
                             Light.setImageDrawable(Lightsettingon);
                             Light.invalidateDrawable(Lightsettingon);
-                            LightSeekBar.setVisibility(View.VISIBLE);
-                            editTextLight.setVisibility(View.VISIBLE);
+                            //LightSeekBar.setVisibility(View.VISIBLE);
+                            //editTextLight.setVisibility(View.VISIBLE);
 
                             break;
                         }
@@ -826,8 +829,9 @@ public class Main extends Activity implements
                             mVibrator.vibrate(100);
                             Light.setImageDrawable(Lightsettingoff);
                             Light.invalidateDrawable(Lightsettingoff);
-                            LightSeekBar.setVisibility(View.INVISIBLE);
-                            editTextLight.setVisibility(View.INVISIBLE);
+                            mWiFiCarControler.sendCommand(COMM_LED_OFF);
+                            //LightSeekBar.setVisibility(View.INVISIBLE);
+                            //editTextLight.setVisibility(View.INVISIBLE);
                             break;
                         }
                 }
