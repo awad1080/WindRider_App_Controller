@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" ></uses-permission>
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" ></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" ></uses-permission>
+
     <!-- set phone vibration authority -->
     <uses-permission android:name="android.permission.VIBRATE" ></uses-permission>
 
@@ -13,7 +14,8 @@
     
     <application
         android:icon="@drawable/icon"
-        android:label="@string/app_name" >
+        android:label="@string/app_name"
+        android:hardwareAccelerated="true">
         <activity
             android:name="com.fei435.Splash"
             android:label="@string/app_name"

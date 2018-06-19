@@ -109,8 +109,8 @@ public class Constant {
 	public static byte[] COMM_CAMERA_ON =  {(byte) 0xFF, (byte)0x02, (byte)0x01, (byte)0x00, (byte) 0xFE};
 	public static byte[] COMM_CAMERA_LEFT ={(byte) 0xFF, (byte)0x02, (byte)0x02, (byte)0x00, (byte) 0xFE};
 	public static byte[] COMM_CAMERA_RIGHT={(byte) 0xFF, (byte)0x02, (byte)0x04, (byte)0x00, (byte) 0xFE};
-	public static byte[] COMM_CAMERA_UP =  {(byte) 0xFF, (byte)0x02, (byte)0x08, (byte)0x00, (byte) 0xFE};
-	public static byte[] COMM_CAMERA_DOWN ={(byte) 0xFF, (byte)0x02, (byte)0x10, (byte)0x00, (byte) 0xFE};
+	public static byte[] COMM_CAMERA_UP =  {(byte) 0xFF, (byte)0x04, (byte)0x08, (byte)0x00, (byte) 0xFE};
+	public static byte[] COMM_CAMERA_DOWN ={(byte) 0xFF, (byte)0x04, (byte)0x10, (byte)0x00, (byte) 0xFE};
 
 
 	//initial velocity 506  16                                                         0x32 = 50 in decimal that's where you change it

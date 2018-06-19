@@ -47,6 +47,7 @@ import static com.fei435.Constant.COMM_SERVO;
 import static com.fei435.Constant.COMM_SUCTION_OFF;
 import static com.fei435.Constant.COMM_SUCTION_ON;
 import static com.fei435.Constant.DEFAULT_VALUE_CAMERA_URL;
+import static com.fei435.Constant.PREF_KEY_CAMERA_URL_TEST;
 
 public class Main extends Activity implements
         com.fei435.SeekBar.OnSeekBarChangeListener,android.widget.SeekBar.OnSeekBarChangeListener  //horizontal and vertical respectively SeekBar
@@ -1047,7 +1048,7 @@ public class Main extends Activity implements
         mWebView.getSettings().setUseWideViewPort(true);
 
         //load the stream link
-        mWebView.loadUrl(DEFAULT_VALUE_CAMERA_URL);
+        mWebView.loadUrl("http://192.168.1.91:5000");
 
         //set the view to be explicitly on the webview widget
         mWebView.setWebViewClient(new InsideWebViewClient());

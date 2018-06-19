@@ -12,12 +12,16 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!-- 设置手机震动权限 -->
+
+    <!-- set phone vibration authority -->
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
+        android:debuggable="true"
+        android:hardwareAccelerated="true"
         android:icon="@drawable/icon"
-        android:label="@string/app_name" >
+        android:label="@string/app_name"
+        android:testOnly="true" >
         <activity
             android:name="com.fei435.Splash"
             android:label="@string/app_name"
@@ -50,8 +54,8 @@
         </receiver>
 
         <provider
-            android:name="com.android.tools.fd.runtime.InstantRunContentProvider"
-            android:authorities="com.fei435.com.android.tools.fd.runtime.InstantRunContentProvider"
+            android:name="com.android.tools.ir.server.InstantRunContentProvider"
+            android:authorities="com.fei435.com.android.tools.ir.server.InstantRunContentProvider"
             android:multiprocess="true" />
     </application>
 

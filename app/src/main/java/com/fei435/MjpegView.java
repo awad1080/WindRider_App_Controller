@@ -181,12 +181,12 @@ public class MjpegView extends SurfaceView implements SurfaceHolder.Callback {
                                     }catch (ClientProtocolException e) {
                                         mRun = false;  //exit thread
                                         Log.i("MjpegView error", "MjpegView error"+e.toString());
-                                        setUiInfo("Failed to get video stream-1");
+                                        //setUiInfo("Failed to get video stream-1");
                                         break;  //jump out of while loop
                                     } catch (IOException e) {
                                         mRun = false;  //exit thread
                                         Log.i("MjpegView error", "MjpegView error"+e.toString());
-                                        setUiInfo("failed to get video stream-2");
+                                        //setUiInfo("failed to get video stream-2");
                                         break;  //jump out while loop
                                     }
                                 }
